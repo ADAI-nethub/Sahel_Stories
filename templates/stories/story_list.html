@@ -31,8 +31,12 @@
 </head>
 <body>
   <h1>🌍 Sahel Stories</h1>
-  <p>Each story you listen to helps plant a tree in the Great Green Wall.</p>
-
+<p>
+  🌳 <strong>{{ total_trees }}</strong> trees planted so far through story listens.
+</p>
+<p>
+  Each story you listen to helps grow the Great Green Wall.
+</p>
   {% for story in stories %}
     <div class="story-card">
       <h3>{{ story.title }}</h3>

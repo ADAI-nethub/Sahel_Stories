@@ -47,8 +47,10 @@
     <h3>📜 Story Transcript</h3>
     <p>{{ story.transcript|linebreaks }}</p>
 
-    <a href="{% url 'plant_tree' story.id %}" class="plant-btn">✅ I Listened — Plant a Tree</a>
-  </div>
+    <form action="{% url 'plant_tree' story.id %}" method="GET" style="display:inline;">
+  <input type="text" name="name" placeholder="Your name (optional)" style="padding:10px; width:200px; border-radius:4px; border:1px solid #ccc;" />
+  <button type="submit" class="plant-btn">✅ I Listened — Plant a Tree</button>
+</form>
 
   <p><a href="{% url 'story_list' %}" class="back">← Back to all stories</a></p>
 </body>
