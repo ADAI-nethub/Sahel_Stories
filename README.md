@@ -49,3 +49,6 @@ Artisans to share stories of resilience and tradition.
 Visitors to listen and trigger tree planting.
 NGOs to manage content via Django Admin.
 The planet to benefit from verified reforestation.
+
+
+![poster 1- GitHUB_repo](https://github.com/user-attachments/assets/5b7bc2ec-722d-4071-ab17-49a18d692c13)
