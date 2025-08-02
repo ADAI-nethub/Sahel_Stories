@@ -22,6 +22,8 @@ The idea you decided to work on.
 
 Sahel Stories is a Django web application that centers local voices from the Sahel region by digitizing oral stories about drought, trees, traditions, and survival — and turning each "listen" into a real tree planted via a verified reforestation partner.
 
+![poster 1- GitHUB_repo](https://github.com/user-attachments/assets/5b7bc2ec-722d-4071-ab17-49a18d692c13)
+
 Built with simplicity and empathy, this project:
 
 Lets artisans share their stories (audio + text)
@@ -50,5 +52,3 @@ Visitors to listen and trigger tree planting.
 NGOs to manage content via Django Admin.
 The planet to benefit from verified reforestation.
 
-
-![poster 1- GitHUB_repo](https://github.com/user-attachments/assets/5b7bc2ec-722d-4071-ab17-49a18d692c13)
