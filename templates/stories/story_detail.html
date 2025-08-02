@@ -1,0 +1,55 @@
+<!-- templates/stories/story_detail.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{{ story.title }} - Sahel Stories</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 40px; background: #f7f5f0; }
+    h1 { color: #4a6b3d; }
+    .story-box {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .audio { margin: 15px 0; }
+    .artisan { font-weight: bold; color: #2c5c6b; }
+    .back { color: #4a6b3d; text-decoration: underline; }
+    .plant-btn {
+      display: inline-block;
+      background: #2c5c6b;
+      color: white;
+      padding: 10px 20px;
+      text-decoration: none;
+      border-radius: 4px;
+      margin-top: 15px;
+    }
+  </style>
+</head>
+<body>
+  <h1>{{ story.title }}</h1>
+  <div class="story-box">
+    <p><strong>From:</strong> <span class="location">{{ story.location }}</span></p>
+    <p><strong>Teller:</strong> <span class="artisan">{{ story.artisan.user.get_full_name|default:story.artisan.user.username }}</span></p>
+
+    {% if story.audio_file %}
+      <div class="audio">
+        <strong>🎧 Listen:</strong><br/>
+        <audio controls>
+          <source src="{{ story.audio_file }}" type="audio/mpeg">
+          Your browser does not support the audio element.
+        </audio>
+      </div>
+    {% endif %}
+
+    <h3>📜 Story Transcript</h3>
+    <p>{{ story.transcript|linebreaks }}</p>
+
+    <a href="{% url 'plant_tree' story.id %}" class="plant-btn">✅ I Listened — Plant a Tree</a>
+  </div>
+
+  <p><a href="{% url 'story_list' %}" class="back">← Back to all stories</a></p>
+</body>
+</html>

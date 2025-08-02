@@ -1,0 +1,49 @@
+<!-- templates/stories/story_list.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sahel Stories</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 40px; background: #f7f5f0; }
+    h1 { color: #4a6b3d; }
+    .story-card {
+      background: white;
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .story-card h3 { margin: 0; color: #2c5c6b; }
+    .story-card p { margin: 8px 0; color: #555; }
+    .location { font-style: italic; color: #666; }
+    .btn {
+      display: inline-block;
+      background: #4a6b3d;
+      color: white;
+      padding: 8px 16px;
+      text-decoration: none;
+      border-radius: 4px;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🌍 Sahel Stories</h1>
+  <p>Each story you listen to helps plant a tree in the Great Green Wall.</p>
+
+  {% for story in stories %}
+    <div class="story-card">
+      <h3>{{ story.title }}</h3>
+      <p class="location">📍 From: {{ story.location }}</p>
+      <p><strong>By:</strong> {{ story.artisan.user.get_full_name|default:story.artisan.user.username }}</p>
+      <a href="{% url 'story_detail' story.id %}" class="btn">Listen to Story</a>
+    </div>
+  {% empty %}
+    <p>No stories yet. Add one in the admin!</p>
+  {% endfor %}
+
+  <p><a href="/admin/stories/story/add/">➕ Add a New Story (Admin)</a></p>
+</body>
+</html>
