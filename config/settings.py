@@ -38,6 +38,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'stories',  #  app name
+    'debug_toolbar',  # Debug toolbar for development
+    
+]
+
+# For debug toolbar
+INTERNAL_IPS = [
+    "127.0.0.1",
 ]
 
 MIDDLEWARE = [
@@ -48,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware', # Debug toolbar middleware
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -121,3 +129,24 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# config/settings.py (add at the end)
+
+import os
+
+# Allow Render to set DEBUG
+DEBUG = os.getenv('DEBUG', 'True') == 'True'
+
+# Render adds its own domain; allow all for now (or set specific one later)
+ALLOWED_HOSTS = ['*']  # In production, replace with your actual domain
+
+# Use PostgreSQL on Render, SQLite locally
+import dj_database_url
+if 'DATABASE_URL' in os.environ:
+    DATABASES['default'] = dj_database_url.config(conn_max_age=600)
+else:
+    DATABASES['default'] = {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }

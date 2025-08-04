@@ -1,53 +1,53 @@
 <!-- templates/stories/story_list.html -->
 <!DOCTYPE html>
 <html lang="en">
+<!-- templates/stories/story_list.html (head only) -->
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Sahel Stories</title>
+  <title>Sahel Stories 🌍</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
-    body { font-family: Arial, sans-serif; margin: 40px; background: #f7f5f0; }
-    h1 { color: #4a6b3d; }
-    .story-card {
-      background: white;
-      padding: 15px;
-      margin: 10px 0;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-    .story-card h3 { margin: 0; color: #2c5c6b; }
-    .story-card p { margin: 8px 0; color: #555; }
-    .location { font-style: italic; color: #666; }
-    .btn {
-      display: inline-block;
-      background: #4a6b3d;
-      color: white;
-      padding: 8px 16px;
-      text-decoration: none;
-      border-radius: 4px;
-      margin-top: 8px;
-    }
+    body { background: #f8f9fa; font-family: 'Segoe UI', sans-serif; }
+    .card { border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+    .btn-green { background: #4a6b3d; color: white; }
+    .hero { background: #4a6b3d; color: white; text-align: center; padding: 2rem; border-radius: 12px; margin: 20px 0; }
   </style>
 </head>
 <body>
-  <h1>🌍 Sahel Stories</h1>
-<p>
-  🌳 <strong>{{ total_trees }}</strong> trees planted so far through story listens.
-</p>
-<p>
-  Each story you listen to helps grow the Great Green Wall.
-</p>
-  {% for story in stories %}
-    <div class="story-card">
-      <h3>{{ story.title }}</h3>
-      <p class="location">📍 From: {{ story.location }}</p>
-      <p><strong>By:</strong> {{ story.artisan.user.get_full_name|default:story.artisan.user.username }}</p>
-      <a href="{% url 'story_detail' story.id %}" class="btn">Listen to Story</a>
+  <div class="container py-5">
+    <div class="hero">
+      <h1>🌍 Sahel Stories</h1>
+      <p>Each story you listen to helps plant a tree in the Great Green Wall.</p>
+      <p><strong>🌳 {{ total_trees }} trees planted so far!</strong></p>
     </div>
-  {% empty %}
-    <p>No stories yet. Add one in the admin!</p>
-  {% endfor %}
 
-  <p><a href="/admin/stories/story/add/">➕ Add a New Story (Admin)</a></p>
+    <div class="row">
+      {% for story in stories %}
+        <div class="col-md-6 col-lg-4 mb-4">
+          <div class="card h-100">
+            <div class="card-body">
+              <h5 class="card-title">{{ story.title }}</h5>
+              <p class="text-muted"><small>📍 {{ story.location }}</small></p>
+              <p class="card-text">
+                <strong>Teller:</strong> {{ story.artisan.user.get_full_name|default:story.artisan.user.username }}
+              </p>
+              <a href="{% url 'story_detail' story.id %}" class="btn btn-green">🎧 Listen & Plant</a>
+            </div>
+          </div>
+        </div>
+      {% empty %}
+        <div class="col">
+          <div class="alert alert-info">No stories yet. Add one in <a href="/admin">admin</a>.</div>
+        </div>
+      {% endfor %}
+    </div>
+
+    <div class="text-center mt-4">
+      <a href="/admin/stories/story/add/" class="btn btn-outline-secondary btn-sm">➕ Add Story (Admin)</a>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

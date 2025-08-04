@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: sahel-stories
+    runtime: python
+    env: production
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn config.wsgi:application
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: DEBUG
+        value: false
+      - key: SECRET_KEY
+        generateValue: true
+    disk:
+      name: db_disk
+      mountPath: /var/lib/postgresql
+    domains:
+      - sahel-stories  # Will be sahel-stories.onrender.com
