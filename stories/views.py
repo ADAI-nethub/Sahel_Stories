@@ -1,7 +1,11 @@
 # stories/views.py
-from django.shortcuts import render, get_object_or_404, redirect
+
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from .models import Story
+
+def home(request):
+    return HttpResponse("Welcome to Sahel Stories!")
 
 def story_list(request):
     stories = Story.objects.all().order_by('-created_at')
