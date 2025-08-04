@@ -22,8 +22,9 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-dev-key-only')  # Never us
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '*').split(',')  # Comma-separated in production
 
+ROOT_URLCONF = 'config.urls'
 # Application definition
-INSTALLED_APPS = [ ROOT_URLCONF = 'config.urls'
+INSTALLED_APPS = [ 
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
