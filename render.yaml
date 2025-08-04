@@ -18,3 +18,15 @@ services:
       mountPath: /var/lib/postgresql
     domains:
       - sahel-stories  # Will be sahel-stories.onrender.com
+
+    services:
+  - type: web
+    name: sahel-stories
+    runtime: python
+    buildCommand: "poetry install --no-dev"
+    startCommand: "gunicorn config.wsgi:application"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.9.13  # Use a stable Python version
+
+        startCommand: "gunicorn --worker-tmp-dir /dev/shm config.wsgi"
