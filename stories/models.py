@@ -1,5 +1,23 @@
 from django.contrib.auth.models import User
 from django.db import models
+# stories/models.py
+
+class Category(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+
+    def __str__(self):
+        return self.name
+
+class Tag(models.Model):
+    name = models.CharField(max_length=30, unique=True)
+
+    def __str__(self):
+        return self.name
+
+        # Add these fields to Story model
+category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True)
+tags = models.ManyToManyField(Tag, blank=True)
+published_at = models.DateTimeField(null=True, blank=True)
 
 class Artisan(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -30,3 +48,4 @@ class TreePlanting(models.Model):
 
     def __str__(self):
         return f"Tree for {self.story.title} at {self.planted_at}"
+    
