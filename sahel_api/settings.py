@@ -2,10 +2,26 @@ from pathlib import Path
 import os
 import dj_database_url
 
+
+
+
+# 👇 Redirect after login/logout
+LOGIN_REDIRECT_URL = "/"      # after login, go to home
+LOGOUT_REDIRECT_URL = "/"     # after logout, go to home
+
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 ROOT_URLCONF = "sahel_api.urls"
 
 REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': 
+        'django_filters.rest_framework.DjangoFilterBackend',
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10
 }
@@ -40,8 +56,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_filters',
         
     # your apps
+    'rest_framework',  # Django REST Framework
     'stories',
     'accounts',
 ]
@@ -56,10 +74,12 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+BASE_DIR = Path(__file__).resolve().parent.parent
+        # 👇 Add templates folder
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],  # or ["templates"] if you have a templates folder
+        'DIRS': [BASE_DIR / "templates"],  # <--- important!
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -71,6 +91,10 @@ TEMPLATES = [
         },
     },
 ]
+
+# 👇 Redirect after login/logout
+LOGIN_REDIRECT_URL = "/"      # after login, go to home
+LOGOUT_REDIRECT_URL = "/"     # after logout, go to home
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = 'static/'

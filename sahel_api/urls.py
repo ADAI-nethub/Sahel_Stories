@@ -18,8 +18,12 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    #path('accounts/', include('accounts.urls')),
+    path("admin/", admin.site.urls),
+    path("api/", include("stories.urls_api")),   # API endpoints
     path('', include('stories.urls')),        # HTML views
-    path('api/', include('stories.urls_api')), # DRF API
+    path("stories/", include("stories.urls")),   # Web views for stories
+
+    # 👇 Add this line to enable login/logout/password views
+    path("accounts/", include("django.contrib.auth.urls")),
 ]
+

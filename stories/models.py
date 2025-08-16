@@ -42,14 +42,15 @@ class Story(models.Model):
 
 
 class Comment(models.Model):
-    story = models.ForeignKey(Story, related_name="comments", on_delete=models.CASCADE)
+    story = models.ForeignKey(Story, on_delete=models.CASCADE, related_name='comments')
     name = models.CharField(max_length=100)
+    email = models.EmailField(blank=True)
     body = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
-    active = models.BooleanField(default=True)
+    active = models.BooleanField(default=True)  # ← Must exist
 
     def __str__(self):
-        return f"Comment by {self.name} on {self.story}"
+        return f'Comment by {self.name}'
 
 
 class TreePlanting(models.Model):

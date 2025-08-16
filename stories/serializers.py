@@ -31,23 +31,14 @@ class StorySerializer(serializers.ModelSerializer):
     category = CategorySerializer(read_only=True)
     tags = TagSerializer(many=True, read_only=True)
     comments_count = serializers.SerializerMethodField()
-    is_published = serializers.SerializerMethodField()
+    is_published = serializers.BooleanField(source='published_at', read_only=True)
 
     class Meta:
         model = Story
         fields = [
-            "id",
-            "title",
-            "transcript",
-            "audio_file",
-            "location",
-            "artisan",
-            "category",
-            "tags",
-            "created_at",
-            "published_at",
-            "is_published",
-            "comments_count",
+            'id', 'title', 'transcript', 'audio_file', 'location',
+            'artisan', 'category', 'tags', 'created_at', 'published_at',
+            'is_published', 'comments_count'
         ]
 
     def get_comments_count(self, obj):

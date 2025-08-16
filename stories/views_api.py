@@ -1,18 +1,44 @@
+# stories/views_api.py
 from rest_framework import generics
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.authentication import SessionAuthentication
 from django_filters import rest_framework as filters
 from django.db.models import Q
+from rest_framework.decorators import api_view, authentication_classes, permission_classes
+from rest_framework.response import Response
+from rest_framework.pagination import PageNumberPagination
 from .models import Story
 from .serializers import StorySerializer
-from rest_framework.pagination import PageNumberPagination
 
+
+# -----------------------------
+# User API
+# -----------------------------
+@api_view(['GET'])
+@authentication_classes([SessionAuthentication])
+@permission_classes([IsAuthenticated])
+def current_user(request):
+    artisan = request.user.artisan
+    return Response({
+        'id': request.user.id,
+        'username': request.user.username,
+        'name': request.user.get_full_name() or request.user.username,
+        'bio': artisan.bio,
+        'community': artisan.community,
+        'is_authenticated': True
+    })
+
+
+# -----------------------------
+# Pagination
+# -----------------------------
 class StoryPagination(PageNumberPagination):
     page_size = 10
 
 
-
-
-
+# -----------------------------
+# Filters
+# -----------------------------
 class StoryFilter(filters.FilterSet):
     category = filters.CharFilter(field_name='category__name', lookup_expr='iexact')
     artisan = filters.NumberFilter(field_name='artisan__user__id')
@@ -33,26 +59,34 @@ class StoryFilter(filters.FilterSet):
         ).distinct()
 
 
+# -----------------------------
+# API Views
+# -----------------------------
 class StoryListAPI(generics.ListAPIView):
-    """
-    API Endpoint: GET /api/stories/
-    Returns published stories with filtering, search, and pagination.
-    """
+    """GET /api/stories/"""
     queryset = Story.objects.filter(published_at__isnull=False).order_by('-published_at')
     serializer_class = StorySerializer
     permission_classes = [AllowAny]
     filter_backends = [filters.DjangoFilterBackend]
     filterset_class = StoryFilter
-    pagination_class = StoryPagination  # ✅ now pagination is applied
-
+    pagination_class = StoryPagination
 
 
 class StoryDetailAPI(generics.RetrieveAPIView):
-    """
-    API Endpoint: GET /api/stories/1/
-    Returns a single published story by ID.
-    """
+    """GET /api/stories/<id>/"""
     queryset = Story.objects.filter(published_at__isnull=False)
     serializer_class = StorySerializer
     permission_classes = [AllowAny]
     lookup_field = 'id'
+
+
+class StoryCreateAPI(generics.CreateAPIView):
+    """POST /api/stories/create/"""
+    queryset = Story.objects.all()
+    serializer_class = StorySerializer
+    authentication_classes = [SessionAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer):
+        artisan = self.request.user.artisan
+        serializer.save(artisan=artisan)

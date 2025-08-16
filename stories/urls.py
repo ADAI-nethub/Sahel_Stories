@@ -12,4 +12,6 @@ urlpatterns = [
     path("", views.home, name="home"),
     path("stories/", views.story_list, name="story_list"),
     path("stories/<int:id>/", views.story_detail, name="story_detail"),
+
+    path('stories/create/', views_api.StoryCreateAPI.as_view(), name='story-create-api'),
 ]
