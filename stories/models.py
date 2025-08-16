@@ -1,6 +1,12 @@
+from django.contrib import admin
 from django.contrib.auth.models import User
 from django.db import models
 # stories/models.py
+
+class StoryAdmin(admin.ModelAdmin):
+    list_display = ('title', 'artisan', 'publish_date')  # <-- use the correct field name
+    list_editable = ('publish_date',)  # <-- same here
+
 
 class Category(models.Model):
     name = models.CharField(max_length=50, unique=True)
@@ -29,11 +35,12 @@ class Artisan(models.Model):
         return self.user.get_full_name() or self.user.username
 
 class Story(models.Model):
-    title = models.CharField(max_length=200)
+    title = models.CharField(max_length=255)
+    artisan = models.ForeignKey('Artisan', on_delete=models.CASCADE)
     transcript = models.TextField()
+    published_at = models.DateTimeField(null=True, blank=True)  # <-- add this field    transcript = models.TextField()
     audio_file = models.URLField(help_text="Link to audio (e.g., SoundCloud)", blank=True)
     location = models.CharField(max_length=100)
-    artisan = models.ForeignKey(Artisan, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
