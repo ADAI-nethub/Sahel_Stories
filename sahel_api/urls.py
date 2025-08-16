@@ -19,5 +19,7 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('stories.urls')),  # or whatever app you’re routing from
+    #path('accounts/', include('accounts.urls')),
+    path('', include('stories.urls')),        # HTML views
+    path('api/', include('stories.urls_api')), # DRF API
 ]

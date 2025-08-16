@@ -5,6 +5,10 @@ import dj_database_url
 BASE_DIR = Path(__file__).resolve().parent.parent
 ROOT_URLCONF = "sahel_api.urls"
 
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10
+}
 
 # Core settings
 SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-dev-key-only')
@@ -36,9 +40,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+        
     # your apps
     'stories',
+    'accounts',
 ]
 
 MIDDLEWARE = [
