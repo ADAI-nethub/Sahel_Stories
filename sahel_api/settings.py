@@ -3,6 +3,8 @@ import os
 import dj_database_url
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+ROOT_URLCONF = "sahel_api.urls"
+
 
 # Core settings
 SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-dev-key-only')
@@ -26,3 +28,52 @@ else:
             'NAME': BASE_DIR / 'db.sqlite3',
         }
     }
+
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+
+    # your apps
+    'stories',
+]
+
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',   # ✅ required
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',  # ✅ required
+    'django.contrib.messages.middleware.MessageMiddleware',     # ✅ required
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [],  # or ["templates"] if you have a templates folder
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
+
+# Static files (CSS, JavaScript, Images)
+STATIC_URL = 'static/'
+
+# (Optional, but recommended during development)
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
+
+# (Optional, for production when you collect static files)
+STATIC_ROOT = BASE_DIR / "staticfiles"
