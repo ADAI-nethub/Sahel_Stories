@@ -3,7 +3,7 @@ import os
 import dj_database_url
 
 
-
+ALLOWED_HOSTS = ['*']
 
 # 👇 Redirect after login/logout
 LOGIN_REDIRECT_URL = "/"      # after login, go to home
@@ -24,6 +24,7 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10
+    
 }
 
 # Core settings
@@ -62,6 +63,7 @@ INSTALLED_APPS = [
     'rest_framework',  # Django REST Framework
     'stories',
     'accounts',
+    
 ]
 
 MIDDLEWARE = [

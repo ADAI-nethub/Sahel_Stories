@@ -7,6 +7,11 @@ from rest_framework.permissions import IsAuthenticated
 from .models import Story
 from .serializers import StorySerializer
 
+# stories/views.py
+def story_map(request):
+    stories = Story.objects.exclude(latitude=None).exclude(longitude=None)
+    return render(request, 'stories/map.html', {'stories': stories})
+
 
 class StoryCreateAPI(generics.CreateAPIView):
     """
