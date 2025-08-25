@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     'rest_framework',  # Django REST Framework
     'stories',
     'accounts',
+    'rest_framework.authtoken',
     
 ]
 

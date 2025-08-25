@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
+    path('api/accounts/', include('accounts.urls_api')),
     path("admin/", admin.site.urls),
     path("api/", include("stories.urls_api")),   # API endpoints
     path('', include('stories.urls')),        # HTML views
