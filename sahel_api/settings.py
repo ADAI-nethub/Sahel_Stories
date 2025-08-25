@@ -1,6 +1,46 @@
 from pathlib import Path
 import os
 import dj_database_url
+import django
+django.setup()  # This will configure Django settings
+# Add at the top of settings.py
+import os
+from dotenv import load_dotenv
+
+# Debug
+DEBUG = False  # Must be False on live site
+
+# Allowed Hosts
+ALLOWED_HOSTS = ['yourusername.pythonanywhere.com']
+
+# Static Files
+STATIC_ROOT = '/home/yourusername/sahel_api/static'
+STATIC_URL = '/static/'
+
+# Database (PythonAnywhere uses SQLite by default)
+# Keep default unless you want to upgrade
+
+
+load_dotenv()  # Load environment variables
+
+# Use environment variables
+SECRET_KEY = os.getenv('SECRET_KEY', 'fallback-secret-key')
+DEBUG = os.getenv('DEBUG', 'False') == 'True'
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('DB_USER'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': os.getenv('DB_HOST'),
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+        }
+    }
+}
+
+ALLOWED_HOSTS = ['ADAI.pythonanywhere.com']
 
 
 ALLOWED_HOSTS = ['*']
@@ -50,6 +90,21 @@ else:
         }
     }
 
+
+# Use MySQL instead of SQLite
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'ADAI$default',           # Database name
+        'USER': 'ADAI',                   # Your username
+        'PASSWORD': 'your_mysql_password', # Set this in next step
+        'HOST': 'ADAI.mysql.pythonanywhere-services.com',
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+        }
+    }
+}
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -64,6 +119,7 @@ INSTALLED_APPS = [
     'stories',
     'accounts',
     'rest_framework.authtoken',
+    'django.contrib.staticfiles', 
     
 ]
 
