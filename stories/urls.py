@@ -1,10 +1,12 @@
 # stories/urls.py
-from django.urls import path
+from django.urls import path, include 
 from . import views  # for normal HTML views like home, story_list, story_detail
 from . import views_api  # for DRF API views
 
 
+
 urlpatterns = [
+    path('', include('stories.urls')),
     path('api/events/', views_api.EventListAPI.as_view(), name='event-list-api'),
     # stories/urls.py
     path('map/', views.story_map, name='story_map'),

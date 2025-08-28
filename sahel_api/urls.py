@@ -14,17 +14,22 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+# sahel_api/urls.py
+
 from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    path('api/accounts/', include('accounts.urls_api')),
-    path("admin/", admin.site.urls),
-    path("api/", include("stories.urls_api")),   # API endpoints
-    path('', include('stories.urls')),        # HTML views
-    path("stories/", include("stories.urls")),   # Web views for stories
+    # API URLs — separate and clean
+    path("api/accounts/", include("accounts.urls_api")),
+    path("api/", include("stories.urls_api")),
 
-    # 👇 Add this line to enable login/logout/password views
+    # HTML views for users visiting your site in a browser
+    path("", include("stories.urls")),
+
+    # Django admin panel
+    path("admin/", admin.site.urls),
+
+    # Login/logout URLs
     path("accounts/", include("django.contrib.auth.urls")),
 ]
-
