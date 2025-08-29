@@ -1,35 +1,18 @@
-"""
-URL configuration for config project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.2/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
+# 📘 sahel_api/urls.py
+# This file is like the map 🗺️ of your whole Django website.
+# It decides which page to show when someone visits a certain link.
 # sahel_api/urls.py
 
 from django.contrib import admin
 from django.urls import path, include
+from django.http import HttpResponse
+
+def root_home(request):
+    return HttpResponse("Welcome to Sahel Stories!")
 
 urlpatterns = [
-    # API URLs — separate and clean
-    path("api/accounts/", include("accounts.urls_api")),
-    path("api/", include("stories.urls_api")),
-
-    # HTML views for users visiting your site in a browser
-    path("", include("stories.urls")),
-
-    # Django admin panel
-    path("admin/", admin.site.urls),
-
-    # Login/logout URLs
-    path("accounts/", include("django.contrib.auth.urls")),
+    path('admin/', admin.site.urls),
+    path('', root_home, name='root_home'),
+    path('stories/', include('stories.urls')),      # website pages
+    path('api/', include('stories.urls_api')),      # API endpoints
 ]

@@ -9,8 +9,23 @@ Built as a beginner-friendly, ethical tech project aligned with the Great Green 
 🌍 Capstone Project Development Document
 Title: Sahel Stories – A Cultural & Climate Connection Platform
 
-## 🌐 Live Demo
-👉 [https://sahel-stories.onrender.com](https://sahel-stories.onrender.com)
+# Sahel Stories
+
+A Django web application for sharing stories from the Sahel region.
+
+## Deployment
+
+This project is deployed on **PythonAnywhere**:
+- **Live Site**:  ADAI.pythonanywhere.com 
+- **Admin Panel**: https://yourusername.pythonanywhere.com/admin
+
+## Local Development
+
+[Keep your existing local development instructions here]
+
+## Previous Deployment
+
+*Previously deployed on Render.com (service deleted on August 28, 2025)*
 
 
 🧭 Purpose

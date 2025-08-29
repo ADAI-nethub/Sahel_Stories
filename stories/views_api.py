@@ -1,23 +1,46 @@
 # 📦 Import tools to build APIs
-from rest_framework import generics  # For common API patterns like list, create, retrieve
-from rest_framework.decorators import api_view  # To create simple functions for APIs
-from rest_framework.response import Response  # To send info back to users
-from rest_framework.authentication import SessionAuthentication  # Checks login session
-from rest_framework.permissions import IsAuthenticated  # Allows only logged-in users
-
-# 🧰 Error handling (important fix!)
-from rest_framework.exceptions import ValidationError  # To show errors clearly
+from rest_framework import generics  # For common API patterns (list, create, detail)
+from rest_framework.decorators import api_view  # To make simple API functions
+from rest_framework.response import Response  # To send info back to the user
+from rest_framework.authentication import SessionAuthentication  # Checks if user is logged in
+from rest_framework.permissions import IsAuthenticated  # Only allow logged-in users
+from rest_framework.exceptions import ValidationError  # Shows clear error messages
 
 # 📬 Other Django tools
-from django.http import JsonResponse  # Sends simple responses (like "pong")
-from django.utils import timezone  # Deals with current date and time
+from django.http import JsonResponse  # For quick yes/no responses
+from django.utils import timezone  # To get current time ⏰
 from django.contrib.auth.models import User  # Built-in user system
 
-# 🧱 Our models (like blueprints for data)
-from .models import Story, Event
+# 🧱 Our blueprints (models) for data
+from .models import Story, Event, TreePlanting
 
-# 🔧 Tools to turn models into JSON and back
+# 🔧 Tools that turn models into JSON and back
 from .serializers import StorySerializer, EventSerializer
+
+
+# ------------------------------------------------------------------------------
+# 🌱 Tree Planting API
+# ------------------------------------------------------------------------------
+
+@api_view(['GET'])
+def pending_trees(request):
+    """
+    📋 Show all trees that are promised but not yet planted.
+    Like a to-do list of trees waiting to go into the ground 🌳.
+    """
+    pending = TreePlanting.objects.filter(status='pending')
+
+    data = []
+    for tree in pending:
+        data.append({
+            "id": tree.id,
+            "story_title": tree.story.title,
+            "planted_by": tree.planted_by,
+            "promised_at": tree.planted_at,
+            "story_url": f"https://yourapp.com/stories/{tree.story.id}/"
+        })
+
+    return Response(data)
 
 
 # ------------------------------------------------------------------------------
@@ -26,18 +49,13 @@ from .serializers import StorySerializer, EventSerializer
 
 @api_view(['GET'])
 def ping(request):
-    """
-    Test if server is alive. Like saying "Are you awake?" and hearing "pong!".
-    """
+    """Test if server is awake. Like saying ‘ping’ and hearing ‘pong’ 🏓."""
     return JsonResponse({"message": "pong"})
 
 
 @api_view(['GET'])
 def health_check(request):
-    """
-    Says that the API is running well and shows the current time.
-    Like checking a robot’s battery and clock.
-    """
+    """Check if API is healthy. Like asking a robot, ‘How are you?’ 🤖."""
     return JsonResponse({
         "status": "ok",
         "timestamp": timezone.now().isoformat(),
@@ -48,8 +66,8 @@ def health_check(request):
 @api_view(['GET'])
 def current_user(request):
     """
-    Shows who is currently logged in. If no one, sends an error.
-    Like asking “Who’s using this phone right now?”
+    Show who is logged in right now 👤.
+    If nobody is logged in, say “Not authenticated.”
     """
     if not request.user.is_authenticated:
         return Response({"detail": "Not authenticated"}, status=401)
@@ -69,29 +87,20 @@ def current_user(request):
 # ------------------------------------------------------------------------------
 
 class StoryListAPI(generics.ListAPIView):
-    """
-    Shows all stories that have been published.
-    Like a bookshelf of finished books.
-    """
-    queryset = Story.objects.filter(published_at__isnull=False)  # Only published stories
-    serializer_class = StorySerializer  # Automatically uses read-only version under the hood
+    """📖 Show all published stories. Like a bookshelf of finished books 📚."""
+    queryset = Story.objects.filter(published_at__isnull=False)
+    serializer_class = StorySerializer
 
 
 class StoryDetailAPI(generics.RetrieveAPIView):
-    """
-    Shows details about one specific story (if it's published).
-    Like picking one book to read from the shelf.
-    """
+    """🔍 Show details of one story. Like pulling one book off the shelf."""
     queryset = Story.objects.filter(published_at__isnull=False)
     serializer_class = StorySerializer
-    lookup_field = 'id'  # Look up stories using their unique ID
+    lookup_field = "id"  # find by story ID
 
 
 class StoryCreateAPI(generics.CreateAPIView):
-    """
-    Lets a logged-in user (storyteller) create a new story.
-    Like giving a notebook to a writer.
-    """
+    """✍️ Let a logged-in artisan write a new story (like giving them a notebook)."""
     queryset = Story.objects.all()
     serializer_class = StorySerializer
     authentication_classes = [SessionAuthentication]
@@ -99,11 +108,9 @@ class StoryCreateAPI(generics.CreateAPIView):
 
     def perform_create(self, serializer):
         try:
-            # Connect the story to the storyteller (Artisan)
-            artisan = self.request.user.artisan
+            artisan = self.request.user.artisan  # link story to storyteller
             serializer.save(artisan=artisan)
         except AttributeError:
-            # If the user doesn’t have an artisan profile yet, show an error
             raise ValidationError(
                 "User does not have an artisan profile. Please complete your profile first."
             )
@@ -114,21 +121,17 @@ class StoryCreateAPI(generics.CreateAPIView):
 # ------------------------------------------------------------------------------
 
 class EventListAPI(generics.ListAPIView):
-    """
-    Shows all upcoming events. Like a calendar of cool stuff coming up.
-    """
-    queryset = Event.objects.filter(date_time__gte=timezone.now()).order_by('date_time')
+    """🗓️ Show all upcoming events. Like a calendar of fun stuff 🎉."""
+    queryset = Event.objects.filter(date_time__gte=timezone.now()).order_by("date_time")
     serializer_class = EventSerializer
 
 
 class EventDetailAPI(generics.RetrieveAPIView):
-    """
-    Shows details about one event.
-    Like reading the invite to a specific party.
-    """
+    """📨 Show details for one event. Like reading the invite to a party 🎈."""
     queryset = Event.objects.all()
     serializer_class = EventSerializer
-    lookup_field = 'id'
+    lookup_field = "id"
+
 
 # ------------------------------------------------------------------------------
 # ✅ END OF FILE
