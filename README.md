@@ -21,7 +21,7 @@ This project is deployed on **PythonAnywhere**:
 
 ## Local Development
 
-[Keep your existing local development instructions here]
+[to Keep  existing local development instructions here]
 
 ## Previous Deployment
 
