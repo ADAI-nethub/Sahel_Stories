@@ -92,14 +92,8 @@ WSGI_APPLICATION = "sahel_api.wsgi.application"
 # 🗄️ Database (use env variables, default is PythonAnywhere MySQL)
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.getenv('DB_NAME', 'ADAI$sahel_stories'),
-        'USER': os.getenv('DB_USER', 'ADAI'),
-        'PASSWORD': os.getenv('DB_PASSWORD', ''),  # 🔑 from .env file
-        'HOST': os.getenv('DB_HOST', 'ADAI.mysql.pythonanywhere-services.com'),
-        'OPTIONS': {
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-        }
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 

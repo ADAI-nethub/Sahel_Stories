@@ -74,5 +74,30 @@ class Tag(models.Model):
 
     def __str__(self):
         return self.name
+    
+    # Create an event model based on the structure of your project
+class Event(models.Model):
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    date_time = models.DateTimeField()
+    location = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.title
+
+ # Create an comment model based on the structure of your project
+class Comment(models.Model):
+    story = models.ForeignKey(Story, on_delete=models.CASCADE, related_name='comments')
+    author_name = models.CharField(max_length=100)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Comment by {self.author_name} on {self.story.title}"
+
+        
+
+    
+
 
 

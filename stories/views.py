@@ -93,4 +93,11 @@ def update_story_views(request, id):
     story.save(update_fields=['views'])
     return redirect('story_detail', id=story.id)
 
+story_detail = update_story_views
+def home(request):
+    """
+    Render the home page.
+    """
+    return render(request, 'stories/home.html')
+
     

@@ -8,3 +8,4 @@ urlpatterns = [
     path('<int:id>/', views.story_detail, name='story_detail'),
     path('home/', views.home, name='home'),
 ]
+#AttributeError: module 'stories.views' has no attribute 'story_detail'
