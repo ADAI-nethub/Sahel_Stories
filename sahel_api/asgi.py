@@ -1,32 +1,32 @@
 """
-ASGI config for config project.
+Configuration ASGI pour le projet config.
 
-It exposes the ASGI callable as a module-level variable named ``application``.
+Expose l'application ASGI comme une variable nommée ``application``.
 
-For more information on this file, see
+Pour plus d'informations sur ce fichier, voir
 https://docs.djangoproject.com/en/5.2/howto/deployment/asgi/
 """
 
-#  sahel_api/wsgi.py
-# This file is like the "engine room" ⚙️ of your Django website.
-# It tells the web server (like Apache or Gunicorn) how to start Django.
+# Fichier : sahel_api/wsgi.py
+# Ce fichier est comme la "salle des machines" de ton site web Django.
+# Il explique au serveur web (comme Apache ou Gunicorn) comment demarrer Django.
 
-import os
-from pathlib import Path
-from dotenv import load_dotenv  # 🪄 lets us read secret stuff from the .env file
+import os  # Pour parler au systeme d'exploitation
+from pathlib import Path  # Pour trouver des chemins de dossiers
+from dotenv import load_dotenv  # Pour lire les secrets du fichier .env
 
-# Find the .env file in the project’s main folder
+# On trouve le dossier principal du projet
 BASE_DIR = Path(__file__).resolve().parent.parent
+# On cree le chemin vers le fichier .env
 env_path = BASE_DIR / ".env"
 
-# If the .env file exists, read it so Django knows our secrets
+# Si le fichier .env existe, on le lit pour que Django connaisse nos secrets
 if env_path.exists():
     load_dotenv(dotenv_path=env_path)
 
-# Tell Django where to find the settings file
+# On dit a Django ou trouver le fichier de parametres (settings)
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "sahel_api.settings")
 
-# Start the WSGI application so the server can run our site
-from django.core.wsgi import get_wsgi_application  # we import this only after settings are ready
-application = get_wsgi_application()
-
+# On demarre l'application WSGI pour que le serveur puisse lancer notre site
+from django.core.wsgi import get_wsgi_application  # On importe apres avoir prepare les parametres
+application = get_wsgi_application()  # On cree l'application que le serveur utilisera

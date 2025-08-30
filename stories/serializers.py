@@ -1,31 +1,31 @@
-# 📘 serializers.py
-# These are "translators" 🗣️ for our database models. 
-# They turn Python objects into JSON for the frontend, 
-# and turn JSON back into Python objects for saving.
+# Fichier : serializers.py
+# Ce sont des "traducteurs" pour nos modeles de base de donnees.
+# Ils transforment les objets Python en JSON pour le frontend,
+# et transforment le JSON en objets Python pour la sauvegarde.
 
-from rest_framework import serializers   # Helps with JSON <-> Python
-from django.utils import timezone        # Handles time and date
-from django.contrib.auth.models import User  # Django's built-in user model
-from .models import Story, Artisan, Category, Tag, Comment, Event  # Our own data models
+from rest_framework import serializers   # Aide avec JSON <-> Python
+from django.utils import timezone        # Gere le temps et la date
+from django.contrib.auth.models import User  # Modele d'utilisateur integre de Django
+from .models import Story, Artisan, Category, Tag, Comment, Event  # Nos modeles de donnees
 
 
-# 👤 Turn a Django user into JSON (only basic info)
+# Transforme un utilisateur Django en JSON (seulement les informations de base)
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'username', 'email', 'first_name', 'last_name', 'date_joined']
-        read_only_fields = ['date_joined']  # 🚫 user can't change this
+        read_only_fields = ['date_joined']  # L'utilisateur ne peut pas changer cela
 
 
-# 📂 Categories help organize stories
+# Les categories aident a organiser les histoires
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = ["id", "name", "slug"]
-        read_only_fields = ["slug"]  # slug is made automatically
+        read_only_fields = ["slug"]  # Le slug est genere automatiquement
 
 
-# 🏷️ Tags are like hashtags for stories
+# Les tags sont comme des hashtags pour les histoires
 class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag
@@ -33,25 +33,25 @@ class TagSerializer(serializers.ModelSerializer):
         read_only_fields = ["slug"]
 
 
-# 🎤 The storyteller (we call them an Artisan)
+# Le conteur (nous l'appelons Artisan)
 class ArtisanSerializer(serializers.ModelSerializer):
-    user = serializers.StringRelatedField(read_only=True)  # just shows the name
-    story_count = serializers.SerializerMethodField()      # counts their published stories
+    user = serializers.StringRelatedField(read_only=True)  # Montre seulement le nom
+    story_count = serializers.SerializerMethodField()      # Compte ses histoires publiees
 
     class Meta:
         model = Artisan
         fields = ["id", "user", "bio", "community", "story_count", "created_at"]
         read_only_fields = ["created_at"]
 
-    # 👉 Count only the stories that are published
+    # Compte seulement les histoires qui sont publiees
     def get_story_count(self, obj):
         return obj.stories.filter(published_at__isnull=False).count()
 
 
-# 💬 Comments left by people on a story
+# Commentaires laisses par les personnes sur une histoire
 class CommentSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField(read_only=True)
-    story_title = serializers.CharField(source='story.title', read_only=True)  # show story name too
+    story_title = serializers.CharField(source='story.title', read_only=True)  # Montre le nom de l'histoire
 
     class Meta:
         model = Comment
@@ -59,15 +59,15 @@ class CommentSerializer(serializers.ModelSerializer):
                   "created_at", "active"]
         read_only_fields = ["created_at", "active"]
         extra_kwargs = {
-            'email': {'write_only': True}  # 🚫 never show email in response
+            'email': {'write_only': True}  # Ne montre jamais l'email dans la reponse
         }
 
 
-# 🎉 Events like festivals or workshops
+# Evenements comme des festivals ou des ateliers
 class EventSerializer(serializers.ModelSerializer):
-    available_slots = serializers.SerializerMethodField()  # how many seats left
-    is_full = serializers.SerializerMethodField()          # is the event full?
-    can_register = serializers.SerializerMethodField()     # can THIS user register?
+    available_slots = serializers.SerializerMethodField()  # Combien de places restantes
+    is_full = serializers.SerializerMethodField()          # L'evenement est-il complet ?
+    can_register = serializers.SerializerMethodField()     # Cet utilisateur peut-il s'inscrire ?
 
     class Meta:
         model = Event
@@ -77,15 +77,15 @@ class EventSerializer(serializers.ModelSerializer):
         ]
         read_only_fields = ['available_slots', 'is_full', 'can_register']
 
-    # 👉 How many empty spots left
+    # Combien de places vides restantes
     def get_available_slots(self, obj):
         return obj.capacity - obj.attendees.count()
 
-    # 👉 Is event full already?
+    # L'evenement est-il deja complet ?
     def get_is_full(self, obj):
         return obj.attendees.count() >= obj.capacity
 
-    # 👉 Can the current user register?
+    # L'utilisateur actuel peut-il s'inscrire ?
     def get_can_register(self, obj):
         request = self.context.get('request')
         if request and request.user.is_authenticated:
@@ -93,11 +93,11 @@ class EventSerializer(serializers.ModelSerializer):
         return False
 
 
-# ✍️ Serializer for creating or updating a story
+# Serializer pour creer ou mettre a jour une histoire
 class StoryWriteSerializer(serializers.ModelSerializer):
     category_id = serializers.PrimaryKeyRelatedField(
         queryset=Category.objects.all(),
-        source='category',   # hook to actual field in model
+        source='category',   # Se connecte au champ reel dans le modele
         write_only=True,
         required=False,
         allow_null=True
@@ -115,21 +115,20 @@ class StoryWriteSerializer(serializers.ModelSerializer):
         fields = [
             'title', 'transcript', 'audio_file', 'location', 'latitude', 'longitude',
             'category_id', 'tag_ids'
-            # ❌ no is_published here because it's a @property, not a field
         ]
 
-    # 👉 Check audio file rules
+    # Verifie les regles du fichier audio
     def validate_audio_file(self, value):
         if value:
-            max_size = 10 * 1024 * 1024  # 10 MB max
+            max_size = 10 * 1024 * 1024  # 10 MB maximum
             if value.size > max_size:
-                raise serializers.ValidationError("Audio file too large. Max size is 10MB.")
+                raise serializers.ValidationError("Fichier audio trop volumineux. Taille max: 10MB.")
             valid_extensions = ['.mp3', '.wav', '.ogg', '.m4a']
             if not any(value.name.lower().endswith(ext) for ext in valid_extensions):
-                raise serializers.ValidationError("Unsupported file format.")
+                raise serializers.ValidationError("Format de fichier non supporte.")
         return value
 
-    # 👉 When saving, tie story to logged-in artisan
+    # Lors de la sauvegarde, lie l'histoire a l'artisan connecte
     def create(self, validated_data):
         request = self.context.get('request')
         if request and request.user.is_authenticated:
@@ -137,15 +136,15 @@ class StoryWriteSerializer(serializers.ModelSerializer):
         return super().create(validated_data)
 
 
-# 👓 Serializer for reading story details (for frontend)
+# Serializer pour lire les details d'une histoire (pour le frontend)
 class StoryReadSerializer(serializers.ModelSerializer):
-    artisan = ArtisanSerializer(read_only=True)     # show storyteller info
-    category = CategorySerializer(read_only=True)   # show category info
-    tags = TagSerializer(many=True, read_only=True) # show tags
+    artisan = ArtisanSerializer(read_only=True)     # Montre les infos du conteur
+    category = CategorySerializer(read_only=True)   # Montre les infos de la categorie
+    tags = TagSerializer(many=True, read_only=True) # Montre les tags
     comments_count = serializers.SerializerMethodField()
     average_rating = serializers.SerializerMethodField()
     duration = serializers.SerializerMethodField()
-    is_published = serializers.SerializerMethodField()  # ✅ comes from @property
+    is_published = serializers.SerializerMethodField()
 
     class Meta:
         model = Story
@@ -156,38 +155,38 @@ class StoryReadSerializer(serializers.ModelSerializer):
         ]
         read_only_fields = ['created_at', 'published_at', 'views']
 
-    # 👉 Count comments that are active
+    # Compte les commentaires actifs
     def get_comments_count(self, obj):
         return obj.comments.filter(active=True).count()
 
-    # 👉 Average rating of story
+    # Note moyenne de l'histoire
     def get_average_rating(self, obj):
         ratings = obj.ratings.all()
         if ratings.exists():
             return round(sum(r.rating for r in ratings) / ratings.count(), 1)
         return None
 
-    # 👉 Return duration if story has audio
+    # Retourne la duree si l'histoire a un audio
     def get_duration(self, obj):
         if hasattr(obj, 'duration'):
             return obj.duration
         return None
 
-    # 👉 Check if story is published
+    # Verifie si l'histoire est publiee
     def get_is_published(self, obj):
         return obj.is_published
 
 
-# 🧠 Smart serializer that picks the right version
+# Serializer intelligent qui choisit la bonne version
 class StorySerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
-        # 👉 Use "read" serializer when sending data
+        # Utilise le serializer "read" lors de l'envoi de donnees
         return StoryReadSerializer(instance, context=self.context).to_representation(instance)
 
     def to_internal_value(self, data):
-        # 👉 Use "write" serializer when receiving data
+        # Utilise le serializer "write" lors de la reception de donnees
         return StoryWriteSerializer(context=self.context).to_internal_value(data)
 
     class Meta:
         model = Story
-        fields = '__all__'  # grab everything from model
+        fields = '__all__'  # Prend tout depuis le modele

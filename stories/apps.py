@@ -1,11 +1,12 @@
-# 📘 stories/apps.py
-# This file tells Django about our "stories" app 🎨
+# Fichier : stories/apps.py
+# Ce fichier presente notre application "stories" a Django
 
-from django.apps import AppConfig
+from django.apps import AppConfig  # On importe la classe de base pour les applications
 
-# 🏷️ Each app needs a "Config class" so Django knows how to set it up
+# Chaque application a besoin d'une "classe Config" pour que Django sache comment la configurer
 class StoriesConfig(AppConfig):
-    # 🔢 Use a big number ID for new database tables
+    # On utilise un type d'identifiant special pour les nouvelles tables de la base de donnees
     default_auto_field = 'django.db.models.BigAutoField'
-    # 🏠 Name of the app (matches the folder)
+    
+    # Le nom de l'application (doit correspondre au nom du dossier)
     name = 'stories'

@@ -1,82 +1,92 @@
-# 📘 Django Settings (like the rulebook for your project)
-# Made simple, safe, and easy to change with environment variables
+# 📘 Django Settings (comme le livre de règles de ton projet)
+# Rendu simple, sécurisé et facile à changer avec des variables d'environnement
 
-import os
-from pathlib import Path
-from dotenv import load_dotenv
+import os  # 📁 Outil pour parler au système d'exploitation
+from pathlib import Path  # 🗺️ Outil pour trouver des chemins de dossiers
+from dotenv import load_dotenv  # 🔍 Outil pour lire les secrets
 
-# Load environment variables from .env file
-load_dotenv()
 
+ALLOWED_HOSTS = [
+    'ADAI.pythonanywhere.com',
+    'localhost',
+    '127.0.0.1'
+]
+
+# Static files settings
+STATIC_URL = '/static/'
+STATIC_ROOT = '/home/ADAI/Sahel_Stories/staticfiles'  # Collected static files
+STATICFILES_DIRS = [
+    '/home/ADAI/Sahel_Stories/static',
+]
+
+
+
+# 🏠 Trouve le dossier principal du projet (2 niveaux au-dessus de ce fichier)
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# 🏠 Find the base folder of the project
-BASE_DIR = Path(__file__).resolve().parent.parent
-
-# 📦 Load all secret keys and settings from the .env file
+# 📦 Charge tous les secrets et paramètres depuis le fichier .env
 load_dotenv()
 
-# 🛡️ Secret key for Django (like the master password)
+# 🛡️ Clé secrète pour Django (comme le mot de passe maître)
 SECRET_KEY = os.getenv("SECRET_KEY", "fallback-insecure-key")
 
-# 🕵️ Decide if we are in debug (developer) mode
+# 🕵️ Décide si on est en mode debug (mode développeur)
 DEBUG = os.getenv("DEBUG", "False").lower() == "true"
 
-# 🌍 Websites allowed to use this server
+# 🌍 Sites web autorisés à utiliser ce serveur
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
 
-# 🍪 For security: which websites can send CSRF cookies
+# 🍪 Pour la sécurité : quels sites web peuvent envoyer des cookies CSRF
 CSRF_TRUSTED_ORIGINS = [
     'https://adai.pythonanywhere.com'
 ]
 
-# 🚪 Where to go after login/logout
+# 🚪 Où aller après connexion/déconnexion
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
 
-# 🧩 List of apps we use
+# 🧩 Liste des applications que nous utilisons
 INSTALLED_APPS = [
-    # 🏗️ Built-in Django apps
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
+    # 🏗️ Applications intégrées à Django
+    'django.contrib.admin',          # 👨‍💼 Panneau d'administration
+    'django.contrib.auth',           # 🔐 Gestion des utilisateurs
+    'django.contrib.contenttypes',   # 📦 Types de contenu
+    'django.contrib.sessions',       # 💺 Gestion des sessions
+    'django.contrib.messages',       # 💬 Système de messages
+    'django.contrib.staticfiles',    # 🎨 Fichiers statiques (CSS, JS)
 
-    # 🛠️ Extra helpers
-    'django_filters',
-    'rest_framework',
-    'rest_framework.authtoken',
+    # 🛠️ Aides supplémentaires
+    'django_filters',                # 🔍 Filtres pour les données
+    'rest_framework',                # 📡 Framework pour API REST
+    'rest_framework.authtoken',      # 🔑 Tokens d'authentification
 
-    # 📚 Our own apps
-    'stories',
-    'accounts',
+    # 📚 Nos propres applications
+    'stories',                       # 📖 Application des histoires
+    'accounts',                      # 👤 Application des comptes
 ]
 
-# 🚦 Middlemen that check every request
+# 🚦 Intermédiaires qui vérifient chaque requête
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.security.SecurityMiddleware',          # 🛡️ Sécurité
+    'django.contrib.sessions.middleware.SessionMiddleware',   # 💺 Sessions
+    'django.middleware.common.CommonMiddleware',              # 🌍 Common
+    'django.middleware.csrf.CsrfViewMiddleware',              # 🍪 Protection CSRF
+    'django.contrib.auth.middleware.AuthenticationMiddleware', # 🔐 Authentification
+    'django.contrib.messages.middleware.MessageMiddleware',   # 💬 Messages
+    'django.middleware.clickjacking.XFrameOptionsMiddleware', # 🚫 Anti-clickjacking
 ]
 
-# 📬 Main URL settings
+# 📬 Paramètres principaux des URLs
 ROOT_URLCONF = "sahel_api.urls"
 
-# 🎨 Templates (HTML pages)
+# 🎨 Templates (pages HTML)
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / "templates"],  # folder where we keep extra templates
-        'APP_DIRS': True,
+        'DIRS': [BASE_DIR / "templates"],  # 📁 Dossier où on garde les templates supplémentaires
+        'APP_DIRS': True,  # ✅ Cherche aussi les templates dans chaque application
         'OPTIONS': {
-            'context_processors': [
+            'context_processors': [  # 🎭 Processeurs qui ajoutent des infos aux templates
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
@@ -86,69 +96,69 @@ TEMPLATES = [
     },
 ]
 
-# 🚀 Web server starter
+# 🚀 Lanceur du serveur web
 WSGI_APPLICATION = "sahel_api.wsgi.application"
 
-# 🗄️ Database (use env variables, default is PythonAnywhere MySQL)
+# 🗄️ Base de données (utilise SQLite par défaut pour la simplicité)
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.sqlite3',  # 🗃️ Type de base de données
+        'NAME': BASE_DIR / 'db.sqlite3',         # 📊 Fichier de la base de données
     }
 }
 
-# 🔐 Password rules
+# 🔐 Règles pour les mots de passe
 AUTH_PASSWORD_VALIDATORS = [
-    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},  # ❌ Pas trop similaire au nom
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},            # 📏 Longueur minimum
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},           # 🚫 Pas un mot de passe commun
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},          # 🔢 Pas que des chiffres
 ]
 
-# 🌎 Language and time
-LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'UTC'
-USE_I18N = True
-USE_TZ = True
+# 🌎 Langue et fuseau horaire
+LANGUAGE_CODE = 'en-us'  # 🇺🇸 Langue anglaise
+TIME_ZONE = 'UTC'        # 🌐 Fuseau horaire universel
+USE_I18N = True          # ✅ Active l'internationalisation
+USE_TZ = True            # ✅ Utilise les fuseaux horaires
 
-# 🎨 Static files (CSS, JS, Images)
-STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'  # where Django collects them
+# 🎨 Fichiers statiques (CSS, JS, Images)
+STATIC_URL = '/static/'  # 🌐 URL pour accéder aux fichiers statiques
+STATIC_ROOT = BASE_DIR / 'staticfiles'  # 📦 Où Django collecte tous les fichiers statiques
 
-# 🎨 Extra static files for development only
-if DEBUG:
+# 🎨 Fichiers statiques supplémentaires pour le développement seulement
+if DEBUG:  # 🛠️ Seulement en mode développement
     STATICFILES_DIRS = [BASE_DIR / "static"]
 
-# 📸 Media files (uploads)
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+# 📸 Fichiers média (uploads)
+MEDIA_URL = '/media/'  # 🌐 URL pour accéder aux fichiers uploadés
+MEDIA_ROOT = BASE_DIR / 'media'  # 📁 Dossier où sont stockés les fichiers uploadés
 
-# 🆔 Default ID type for new models
+# 🆔 Type d'ID par défaut pour les nouveaux modèles
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# 📦 REST API settings
+# 📦 Paramètres de l'API REST
 REST_FRAMEWORK = {
-    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.TokenAuthentication',
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],  # 🔍 Filtres
+    'DEFAULT_AUTHENTICATION_CLASSES': [  # 🔐 Méthodes d'authentification
+        'rest_framework.authentication.SessionAuthentication',  # 💺 Sessions
+        'rest_framework.authentication.TokenAuthentication',    # 🔑 Tokens
     ],
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',  # 🔐 safe by default
+    'DEFAULT_PERMISSION_CLASSES': [  # 🚫 Permissions par défaut
+        'rest_framework.permissions.IsAuthenticated',  # 🔐 Sécurité par défaut
     ],
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 10
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',  # 📄 Pagination
+    'PAGE_SIZE': 10  # 🔢 10 éléments par page
 }
 
-# 🌳 Google Sheets API credentials
-# Path to the service account JSON file (can be overridden in .env)
+# 🌳 Identifiants de l'API Google Sheets
+# Chemin vers le fichier JSON du compte de service (peut être changé dans .env)
 GOOGLE_SHEETS_CREDS = os.getenv(
     "GOOGLE_SHEETS_CREDS",
-    str(BASE_DIR / "google-credentials.json")  # fallback if not in .env
+    str(BASE_DIR / "google-credentials.json")  # 📁 Fichier par défaut si pas dans .env
 )
 
-# Name of the Google Sheet we connect to
+# Nom du Google Sheet auquel on se connecte
 GOOGLE_SHEETS_NAME = os.getenv(
     "GOOGLE_SHEETS_NAME",
-    "Sahel Tree Planting"  # default sheet name
+    "Sahel Tree Planting"  # 🌳 Nom par défaut de la feuille
 )
