@@ -1,0 +1,72 @@
+[
+  {
+    "id": 1,
+    "title": "The River That Divides",
+    "author": "Amadou Diallo",
+    "category": "Divergent",
+    "content": "On one side of the Niger River, farmers grow rice with ancient techniques. On the other, mechanized agriculture drains the water. What happens when tradition meets modernity in a drying climate?"
+  },
+  {
+    "id": 2,
+    "title": "Two Schools, One Language",
+    "author": "Aisha Touré",
+    "category": "Divergent",
+    "content": "In a border town, children attend two different schools — one teaches in French, the other in Arabic. They play together, but their futures pull them in opposite directions."
+  },
+  {
+    "id": 3,
+    "title": "The Market of Many Tongues",
+    "author": "Idrissa Keita",
+    "category": "Divergent",
+    "content": "Women trade in five languages at the Gao market. Each stall tells a story of migration, survival, and subtle competition. Unity in commerce, but division in trust."
+  },
+  {
+    "id": 4,
+    "title": "The Last Baobab",
+    "author": "Fatima Aboubacar",
+    "category": "Divergent",
+    "content": "Elders say the great baobab is sacred. Developers say it blocks progress. When the chainsaws arrive, the village splits — youth on one side, elders on the other."
+  },
+  {
+    "id": 5,
+    "title": "Solar Panels or Candles?",
+    "author": "Moussa Traoré",
+    "category": "Divergent",
+    "content": "One village embraces solar energy. The next prefers kerosene lamps. Not because of cost — but because fire is part of their rituals. Light divides as much as it illuminates."
+  },
+  {
+    "id": 6,
+    "title": "The Great Tree Planting Pact",
+    "author": "Children of the Sahel",
+    "category": "Convergent",
+    "content": "Five villages, once rivals, unite to plant 10,000 trees. They share seeds, water, and songs. A new generation learns: roots grow deeper when planted together."
+  },
+  {
+    "id": 7,
+    "title": "The Radio That Connects",
+    "author": "Radio Sahel Team",
+    "category": "Convergent",
+    "content": "A community radio broadcasts in five languages. Farmers share weather tips. Women trade recipes. A simple antenna becomes a bridge across borders."
+  },
+  {
+    "id": 8,
+    "title": "The Water Well of Unity",
+    "author": "Engineers Without Borders",
+    "category": "Convergent",
+    "content": "When drought hits, three villages dig one deep well. They create a shared schedule, guarded by elders from all sides. Water becomes a covenant, not a conflict."
+  },
+  {
+    "id": 9,
+    "title": "Grandmothers’ Wisdom Circle",
+    "author": "Sahel Elders Network",
+    "category": "Convergent",
+    "content": "Elders from Mali, Niger, and Burkina Faso meet under a tamarind tree. They record oral histories together. Their message: 'We are not one people — but we are one purpose.'"
+  },
+  {
+    "id": 10,
+    "title": "The Green Wall Rises",
+    "author": "AU Sahel Initiative",
+    "category": "Convergent",
+    "content": "From Senegal to Djibouti, 20 countries plant a wall of trees. Satellite images show green spreading. It’s not just ecology — it’s diplomacy in action."
+  }
+]
