@@ -1,47 +1,44 @@
-# 📘 sahel_api/urls.py
-# Ce fichier est comme la carte 🗺️ de tout ton site web Django.
-# Il décide quelle page montrer quand quelqu'un visite un lien particulier.
+"""
+Root URL Configuration for Sahel_Stories
 
-<<<<<<< HEAD
-from django.contrib import admin  # 👨‍💼 Importe le panneau d'administration
-from django.urls import path, include  # 📍 Importe les outils pour créer des chemins
-from django.http import HttpResponse  # 📝 Importe l'outil pour écrire une réponse simple
-=======
+This module defines the main URL routes for the project.
+It includes:
+- Admin interface
+- Homepage
+- App-specific URL patterns (stories, API)
+- Static & media file serving in development
+"""
 
-from django.contrib import admin  # 👨‍💼 Importe le panneau d'administration
-from django.urls import path, include  # 📍 Importe les outils pour créer des chemins
-from django.http import HttpResponse  # 📝 Importe l'outil pour écrire une réponse simple
+from django.contrib import admin
+from django.urls import path, include
+from django.http import HttpResponse
 from django.conf import settings
 from django.conf.urls.static import static
->>>>>>> 3c75fe9 (project sahel_sahel stories-main)
 
-# 🏠 Crée une petite fonction qui dit "Bienvenue !" quand on visite la page d'accueil
-def root_home(request):
-    return HttpResponse("Welcome to Sahel Stories!")
 
-# 🗺️ Liste de tous les chemins (URLs) que ton site comprend
+# 🏠 Homepage view
+def home(request):
+    """
+    Simple welcome view for the root URL.
+    Replace with a proper template view in production.
+    """
+    return HttpResponse("<h1>Welcome to Sahel Stories!</h1><p>Planting trees, one story at a time. 🌳</p>")
+
+
+# 🗺️ URL patterns
 urlpatterns = [
-    # 👨‍💼 Quand quelqu'un va vers /admin/, montre le panneau d'administration
+    # Admin
     path('admin/', admin.site.urls),
-    
-<<<<<<< HEAD
-=======
-    
->>>>>>> 3c75fe9 (project sahel_sahel stories-main)
-    # 🏠 Quand quelqu'un va sur la page d'accueil (juste /), montre le message de bienvenue
-    path('', root_home, name='root_home'),
-    
-    # 📖 Quand quelqu'un va vers /stories/, regarde dans le fichier urls.py de l'app "stories"
-    path('stories/', include('stories.urls')),      # pages du site web
-    
-    # 🔌 Quand quelqu'un va vers /api/, regarde dans le fichier urls_api.py de l'app "stories"
-    path('api/', include('stories.urls_api')),      # points de terminaison d'API
-<<<<<<< HEAD
-]
-=======
+
+    # Web pages
+    path('', home, name='home'),
+    path('stories/', include('stories.urls')),       # Story pages (e.g., /stories/, /stories/5/)
+
+    # API endpoints
+    path('api/', include('stories.urls_api')),       # REST API (e.g., /api/stories/, /api/plant/)
 ]
 
+# 🔧 Serve static and media files during development only
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
->>>>>>> 3c75fe9 (project sahel_sahel stories-main)
