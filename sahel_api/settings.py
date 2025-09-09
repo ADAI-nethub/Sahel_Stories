@@ -11,6 +11,8 @@ from pathlib import Path
 from dotenv import load_dotenv
 import dj_database_url
 
+ROOT_URLCONF = "sahel_api.urls" # 📬 Fichier principal qui gère toutes les adresses du site (URLs)
+
 
 # 🏠 BASE_DIR: Finds the main folder of your project
 # Think: "Where is this file located? Go two folders up — that's the project root!"
