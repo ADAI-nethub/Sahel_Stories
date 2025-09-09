@@ -1,4 +1,4 @@
-<img width="841" height="486" alt="image" src="https://github.com/user-attachments/assets/cbff2fc4-1467-4d7c-91e1-0446d52bb79d" /># Sahel Stories 🌍
+# Sahel Stories 🌍
 
 A Django web app that connects cultural storytelling in the Sahel region with real tree planting.
 
