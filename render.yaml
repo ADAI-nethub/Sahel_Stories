@@ -1,0 +1,22 @@
+databases:
+  - name: sahel-stories-db
+    plan: free
+
+services:
+  - type: web
+    name: sahel-stories-web
+    plan: free
+    runtime: python
+    buildCommand: pip install -r requirements.txt && python manage.py collectstatic --noinput
+    startCommand: gunicorn sahel_api.wsgi:application
+    envVars:
+      - key: DEBUG
+        value: False
+      - key: SECRET_KEY
+        generateValue: true
+      - key: ALLOWED_HOSTS
+        value: sahel-stories-1.onrender.com
+      - key: DATABASE_URL
+        fromDatabase:
+          name: sahel-stories-db
+          user: postgres

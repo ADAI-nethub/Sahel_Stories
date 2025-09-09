@@ -1,44 +1,13 @@
-"""
-Root URL Configuration for Sahel_Stories
-
-This module defines the main URL routes for the project.
-It includes:
-- Admin interface
-- Homepage
-- App-specific URL patterns (stories, API)
-- Static & media file serving in development
-"""
-
-from django.contrib import admin
-from django.urls import path, include
-from django.http import HttpResponse
-from django.conf import settings
-from django.conf.urls.static import static
-
-
-# 🏠 Homepage view
-def home(request):
-    """
-    Simple welcome view for the root URL.
-    Replace with a proper template view in production.
-    """
-    return HttpResponse("<h1>Welcome to Sahel Stories!</h1><p>Planting trees, one story at a time. 🌳</p>")
-
-
-# 🗺️ URL patterns
+# 🗺️ This is the map of our village
 urlpatterns = [
-    # Admin
-    path('admin/', admin.site.urls),
-
-    # Web pages
-    path('', home, name='home'),
-    path('stories/', include('stories.urls')),       # Story pages (e.g., /stories/, /stories/5/)
-
-    # API endpoints
-    path('api/', include('stories.urls_api')),       # REST API (e.g., /api/stories/, /api/plant/)
+    path('admin/', admin.site.urls),       # 👨‍💼 The office for grown-ups who manage the village
+    path('', home, name='home'),           # 🏠 The welcome sign at the entrance
+    path('stories/', include('stories.urls')),  # 📖 The street where all the storytellers live
+    path('api/', include('stories.urls_api')),  # 📡 A secret tunnel for robots (API)
 ]
 
-# 🔧 Serve static and media files during development only
-if settings.DEBUG:
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+#Think of urls.py like a map of your favorite amusement park.
+#The map shows where the roller coaster is, where to get cotton candy, and where the bathroom is.
+#If there’s no map, everyone gets lost.
+#This file is the map for your website!

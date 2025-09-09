@@ -19,3 +19,9 @@ Built as a beginner-friendly, ethical tech project aligned with the Great Green 
 4. `pip install django`
 5. `python manage.py runserver`
 6. Visit http://127.0.0.1:8000
+
+
+## 👤 Built by
+**Mohamed Poku**  
+Django Developer | Climate & Culture Advocate  
+[GitHub](https://github.com/ADAI-nethub) | [LinkedIn](https://www.linkedin.com/in/poku-cheremeh246)
