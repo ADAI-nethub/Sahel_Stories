@@ -1,100 +1,150 @@
-# Sahel Stories 🌍
+# Sahel Stories 
 
-A Django web app that connects cultural storytelling in the Sahel region with real tree planting.
+*A Django web application that connects cultural storytelling in the Sahel region with real tree planting.*
 
-Each time a visitor listens to a story from a local artisan, a tree is planted via a reforestation partner.
+Each time a visitor listens to a story from a local artisan, a symbolic (or future real) tree is planted — turning empathy into environmental action.
 
-Built as a beginner-friendly, ethical tech project aligned with the Great Green Wall Initiative.
+Built as a beginner-friendly, ethical tech project aligned with the **Great Green Wall Initiative**.
 
-🌍 Capstone Project Development Document
-Title: Sahel Stories – A Cultural & Climate Connection Platform
+![Render Dashboard - Sahel_Stories-1](https://github.com/user-attachments/assets/6fc772c6-2b00-49c4-85bc-ef391d235c2b)
 
-# Sahel Stories
+---
 
-A Django web application for sharing stories from the Sahel region.
+## Live Demo
 
-## Deployment
+✅ **Deployed on Render**:  
+ [https://sahel-stories-1.onrender.com](https://sahel-stories-1.onrender.com)
 
-This project is deployed on **render.com**:
-- **Admin Panel**: https://sahel-stories-1.onrender.com
-- Service ID: srv-d2u86undiees73cmmmf0
-<img width="841" height="486" alt="image" src="https://github.com/user-attachments/assets/6fc772c6-2b00-49c4-85bc-ef391d235c2b" />
+ **Admin Panel**:  
+[https://sahel-stories-1.onrender.com/admin](https://sahel-stories-1.onrender.com/admin)
 
-## Local Development
+ **Service ID**: `srv-d2u86undiees73cmmmf0`  
+ **Hosted on**: [Render.com](https://render.com)  
+ **Repository**: [ADAI-nethub / Sahel_Stories](https://github.com/ADAI-nethub/Sahel_Stories)
 
+---
 
+## 🛠 What I’ve Achieved So Far
 
+After overcoming multiple deployment challenges, here is what has been successfully completed:
 
-🧭 Purpose
-To preserve oral traditions of the Sahel while driving real climate action by linking cultural storytelling to verified tree planting — empowering local artisans and engaging global travelers in a meaningful way.
+### ✅ Fixed Critical Deployment Errors
+- Resolved Git merge conflicts in `settings.py` and `urls.py`
+- Removed system packages (`Brlapi`, `apturl`) from `requirements.txt`
+- Regenerated a clean, production-ready `requirements.txt`
 
-🌱 Cause
-To support the Great Green Wall Initiative by creating a human-centered digital bridge between cultural heritage and environmental restoration — where every story heard helps grow the green belt of Africa.
+### ✅ Configured Environment Variables
+- Set `SECRET_KEY`, `DEBUG`, `ALLOWED_HOSTS`, and `CSRF_TRUSTED_ORIGINS`
+- Ensured secure and stable production settings
 
-🕊️ Belief
-We believe that stories are seeds. When shared with care, they can grow forests, revive traditions, and connect people across continents — not through gamification, but through genuine respect and reciprocity.
+### ✅ Connected to PostgreSQL
+- Created a PostgreSQL instance on Render
+- Linked it via `DATABASE_URL`
+- Successfully ran `python manage.py migrate`
 
+### ✅ Admin & Authentication
+- Created a superuser via **Render Shell**
+- Verified login to Django Admin is working
 
-🎯 Executive Summary
-The idea you decided to work on.
+### ✅ Static Files Served via Whitenoise
+- CSS, JS, and images now load correctly in production
 
-Sahel Stories is a Django web application that centers local voices from the Sahel region by digitizing oral stories about drought, trees, traditions, and survival — and turning each "listen" into a real tree planted via a verified reforestation partner.
+### ✅ Google Sheets Integration (Prepared)
+- Code ready to sync tree planting data using `gspread`
+- Secure credential loading via environment variables
 
-![poster 1- GitHUB_repo](https://github.com/user-attachments/assets/5b7bc2ec-722d-4071-ab17-49a18d692c13)
+---
 
-Built with simplicity and empathy, this project;
->Lets artisans share their stories (audio + text)
->Lets visitors listen and contribute to reforestation
->Logs each tree planted with location and story link
->Uses Django Admin for easy content management
->Is designed to scale into SMS/WhatsApp access later
->It is not a full tourism platform — it’s a focused, ethical, and beginner-accessible step toward one.
+## 🎯 Executive Summary
 
-✅ What This Project Covers:
+**Sahel Stories** is a Django web application that centers local voices from the Sahel region by digitizing oral stories about drought, trees, traditions, and survival — and linking each "listen" to a symbolic tree planting.
 
-Artisan profiles (local storytellers)
-Story listings with location and transcript
-“Listen & Plant” action (simulated or real tree planting)
-Tree planting tracker (with visitor name & date)
-Admin interface for managing content
-Simple HTML frontend (Django templates)
+![Project Poster](https://github.com/user-attachments/assets/5b7bc2ec-722d-4071-ab17-49a18d692c13)
 
+### Built with:
+> Artisan stories (text/audio)  
+>  "Listen & Plant" action  
+>  Tree planting tracker  
+>  Django Admin for content management  
+>  Designed for future SMS/WhatsApp access  
+>  Not a full tourism platform — just a focused, ethical step toward one.
 
-## 🎯 Core Purpose
-This web app supports cultural preservation and climate action by allowing:
+---
 
-Artisans to share stories of resilience and tradition.
-Visitors to listen and trigger tree planting.
-NGOs to manage content via Django Admin.
-The planet to benefit from verified reforestation.
+## Features
+
+- Artisan profiles (local storytellers)
+- Story listings with location and transcript
+- “Listen & Plant” action (simulated tree planting)
+- Tree planting tracker (with visitor name & date)
+- Admin interface for managing content
+- Simple HTML frontend (Django templates)
+- Responsive design with Bootstrap
+- Map view using GeoJSON (in progress)
+
+---
+
+## Core Purpose
+
+This web app supports **cultural preservation** and **climate action** by allowing:
+
+- 🧑‍🌾 **Artisans** to share stories of resilience and tradition  
+- 👂 **Visitors** to listen and trigger a symbolic tree planting  
+- 🛠 **NGOs** to manage content via Django Admin  
+- 🌍 **The planet** to benefit from verified reforestation (future phase)
+
+> 💬 *"We believe that stories are seeds. When shared with care, they can grow forests, revive traditions, and connect people across continents."*
+
+---
 
 ## 🛠 Tech Stack
-- Python + Django
-- HTML/CSS + Bootstrap
-- SQLite (local), PostgreSQL (production)
-- Render.com (hosting)
-- GitHub (version control)
 
-## 🌱 Impact
-- Preserves oral traditions
-- Logs tree plantings for every story listened to
-- Designed for future SMS/WhatsApp integration
+| Layer | Technology |
+|------|------------|
+| Backend | Python, Django |
+| Frontend | HTML, CSS, Bootstrap, Django Templates |
+| API | Django REST Framework |
+| Database | SQLite (local), PostgreSQL (production) |
+| Hosting | Render.com |
+| Version Control | GitHub |
+| Environment | Python 3.10+, Virtual Environment |
+| Deployment | Gunicorn, Whitenoise, `requirements.txt` |
 
-## 🧭 How to Run Locally
-1. Clone the repo
-2. `python -m venv venv`
-3. Activate: `source venv/bin/activate` (Mac/Linux) or `venv\Scripts\activate` (Windows)
-4. `pip install -r requirements.txt`
-5. `python manage.py runserver`
-6. Visit `http://127.0.0.1:8000`
+---
 
-## 📸 Screenshots
-_(later)_
+## Impact
 
-## 🌱 Next Steps
-- Connect to Tree Nation API for real tree planting
-- Add WhatsApp/SMS access via Twilio
-- Translate into French, Arabic, Tamasheq
-- Partner with Sahel NGOs to collect real stories
+- ✅ Preserves oral traditions of the Sahel
+- ✅ Logs every "tree planted" action
+- ✅ Designed for future integration with SMS/WhatsApp (Twilio)
+- ✅ Beginner-accessible codebase with clear comments
+- ✅ Ethical by design — no gamification, no exploitation
 
+---
 
+## How to Run Locally
+
+```bash
+# 1. Clone the repo
+git clone https://github.com/ADAI-nethub/Sahel_Stories.git
+cd Sahel_Stories
+
+# 2. Create and activate virtual environment
+python -m venv venv
+source venv/bin/activate    # Linux/Mac
+# venv\Scripts\activate      # Windows
+
+# 3. Install dependencies
+pip install -r requirements.txt
+
+# 4. Run migrations
+python manage.py migrate
+
+# 5. Create superuser (optional)
+python manage.py createsuperuser
+
+# 6. Start the server
+python manage.py runserver
+
+# 7. Visit
+http://127.0.0.1:8000
