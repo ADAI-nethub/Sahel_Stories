@@ -91,7 +91,6 @@ LANGUAGES = [
 # 🚦 MIDDLEWARE: Security guards that check every visitor
 # "Like bouncers at a club — they check IDs, stop bad requests, etc."
 MIDDLEWARE = [
-    'django.middleware.locale.LocaleMiddleware'
     'django.middleware.security.SecurityMiddleware',           # Adds security headers
     'django.contrib.sessions.middleware.SessionMiddleware',    # Tracks logged-in users
     'django.middleware.common.CommonMiddleware',               # Handles common web rules
@@ -100,6 +99,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',    # Enables messages
     'django.middleware.clickjacking.XFrameOptionsMiddleware',  # Stops clickjacking
     'whitenoise.middleware.WhiteNoiseMiddleware',              # Serves static files fast
+    'django.middleware.locale.LocaleMiddleware', 
 ]
 
 

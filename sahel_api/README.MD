@@ -20,6 +20,11 @@ Built as a beginner-friendly, ethical tech project aligned with the Great Green 
 5. `python manage.py runserver`
 6. Visit http://127.0.0.1:8000
 
+## 📁 Project Structure
+
+- `scripts/` - Utility scripts (e.g., Google Sheets auth)
+- `stories/fixtures/` - Sample data for seeding the database
+
 
 ## 👤 Built by
 **Mohamed Poku**  
